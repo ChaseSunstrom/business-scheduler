@@ -40,8 +40,8 @@ Business Scheduler is a standalone JavaFX desktop application designed to simpli
    ```
 2. Build and run with Gradle:
    ```bash
-   ./gradlew build
-   ./gradlew run
+   gradle build
+   gradle run
    ```
 3. From the UI:
    - **Add Resource**: Enter ID, name, and type; click Add.
@@ -66,6 +66,3 @@ Business Scheduler is a standalone JavaFX desktop application designed to simpli
 - **Calendar Integration**: Sync tasks with external calendars (Google, Outlook).
 - **User Preferences**: Themes, date/time formats, and notification settings.
 - **Web & Mobile Clients**: Expand to Spring Boot web service and native mobile apps.
-
----
-*Prepared by Chase Sunstrom, 05/12/2025* 
