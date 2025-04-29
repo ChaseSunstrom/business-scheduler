@@ -1,0 +1,45 @@
+plugins {
+    id 'application'
+    id 'java'
+}
+
+group 'com.scheduler'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    javafxVersion = '17.0.2'
+    // Auto-detect platform for JavaFX modules
+    def osName = System.getProperty('os.name').toLowerCase()
+    javafxPlatform = osName.contains('win') ? 'win' : osName.contains('mac') ? 'mac' : 'linux'
+}
+
+dependencies {
+    // JavaFX modules (base and graphics are needed for core APIs)
+    implementation "org.openjfx:javafx-base:${javafxVersion}:${javafxPlatform}"
+    implementation "org.openjfx:javafx-graphics:${javafxVersion}:${javafxPlatform}"
+    implementation "org.openjfx:javafx-controls:${javafxVersion}:${javafxPlatform}"
+    implementation "org.openjfx:javafx-fxml:${javafxVersion}:${javafxPlatform}"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+}
+
+application {
+    mainClass = 'main.java.com.scheduler.MainApp'
+    applicationDefaultJvmArgs = [
+        "--module-path", configurations.runtimeClasspath.asPath,
+        "--add-modules", "javafx.base,javafx.graphics,javafx.controls,javafx.fxml"
+    ]
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.test {
+    useJUnitPlatform()
+} 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<SplitPane dividerPositions="0.3" xmlns:fx="http://javafx.com/fxml" fx:controller="main.java.com.scheduler.UI.MainController">
+    <items>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Resources" />
+            <TableView fx:id="resourceTable" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="resIdCol" text="ID" prefWidth="100" />
+                    <TableColumn fx:id="resNameCol" text="Name" prefWidth="150" />
+                    <TableColumn fx:id="resTypeCol" text="Type" prefWidth="150" />
+                </columns>
+            </TableView>
+            <HBox spacing="5">
+                <TextField fx:id="resIdField" promptText="ID" />
+                <TextField fx:id="resNameField" promptText="Name" />
+                <TextField fx:id="resTypeField" promptText="Type" />
+                <Button text="Add Resource" onAction="#handleAddResource" />
+            </HBox>
+        </VBox>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Tasks" />
+            <TableView fx:id="taskTable" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="taskIdCol" text="ID" prefWidth="80" />
+                    <TableColumn fx:id="taskNameCol" text="Name" prefWidth="150" />
+                    <TableColumn fx:id="taskUrgencyCol" text="Urgency" prefWidth="80" />
+                    <TableColumn fx:id="taskDeadlineCol" text="Deadline" prefWidth="150" />
+                    <TableColumn fx:id="taskResourceCol" text="Resource" prefWidth="100" />
+                </columns>
+            </TableView>
+            <HBox spacing="5">
+                <TextField fx:id="taskIdField" promptText="ID" />
+                <TextField fx:id="taskNameField" promptText="Name" />
+                <TextField fx:id="taskUrgencyField" promptText="Urgency(1-5)" />
+                <DatePicker fx:id="taskDeadlinePicker" />
+                <ComboBox fx:id="taskResourceCombo" promptText="Resource" />
+                <Button text="Add Task" onAction="#handleAddTask" />
+            </HBox>
+        </VBox>
+    </items>
+</SplitPane> 

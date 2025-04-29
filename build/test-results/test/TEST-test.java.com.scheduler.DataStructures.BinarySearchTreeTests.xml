@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test.java.com.scheduler.DataStructures.BinarySearchTreeTests" tests="8" skipped="0" failures="0" errors="0" timestamp="2025-04-29T17:30:11.547Z" hostname="CHASE-WIN" time="0.019">
+  <properties/>
+  <testcase name="testUpdateValue()" classname="test.java.com.scheduler.DataStructures.BinarySearchTreeTests" time="0.003"/>
+  <testcase name="testValuesInOrder()" classname="test.java.com.scheduler.DataStructures.BinarySearchTreeTests" time="0.0"/>
+  <testcase name="testEmptyTree()" classname="test.java.com.scheduler.DataStructures.BinarySearchTreeTests" time="0.002"/>
+  <testcase name="testContainsKey()" classname="test.java.com.scheduler.DataStructures.BinarySearchTreeTests" time="0.001"/>
+  <testcase name="testPutAndGet()" classname="test.java.com.scheduler.DataStructures.BinarySearchTreeTests" time="0.001"/>
+  <testcase name="testRemoveLeaf()" classname="test.java.com.scheduler.DataStructures.BinarySearchTreeTests" time="0.001"/>
+  <testcase name="testRemoveNodeWithChildren()" classname="test.java.com.scheduler.DataStructures.BinarySearchTreeTests" time="0.001"/>
+  <testcase name="testNullKeyThrows()" classname="test.java.com.scheduler.DataStructures.BinarySearchTreeTests" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
