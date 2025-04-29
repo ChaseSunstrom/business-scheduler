@@ -36,6 +36,7 @@
                     <TableColumn fx:id="taskNameCol" text="Name" prefWidth="150" />
                     <TableColumn fx:id="taskUrgencyCol" text="Urgency" prefWidth="80" />
                     <TableColumn fx:id="taskDeadlineCol" text="Deadline" prefWidth="150" />
+                    <TableColumn fx:id="taskStatusCol" text="Status" prefWidth="100" />
                     <TableColumn fx:id="taskResourceCol" text="Resource" prefWidth="100" />
                 </columns>
             </TableView>
@@ -45,7 +46,14 @@
                 <TextField fx:id="taskUrgencyField" promptText="Urgency(1-5)" />
                 <DatePicker fx:id="taskDeadlinePicker" />
                 <ComboBox fx:id="taskResourceCombo" promptText="Resource" />
-                <Button text="Add Task" onAction="#handleAddTask" />
+                <Button text="Add/Update Task" onAction="#handleAddTask" />
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <Button text="Clear Finished" onAction="#handleClearFinished" />
+                <Button text="Clear Canceled" onAction="#handleClearCanceled" />
             </HBox>
         </VBox>
     </items>

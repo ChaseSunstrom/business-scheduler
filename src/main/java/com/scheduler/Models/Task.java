@@ -2,6 +2,7 @@ package main.java.com.scheduler.Models;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import com.scheduler.Models.TaskStatus;
 
 /**
  * Represents a task with id, name, urgency, deadline, resource, Comparable implementation and validation
@@ -12,6 +13,7 @@ public class Task implements Comparable<Task> {
     private int urgency; // 1 (lowest) to 5 (highest)
     private LocalDateTime deadline;
     private Resource resource;
+    private TaskStatus status;
 
     /**
      * Constructs a Task.
@@ -32,6 +34,21 @@ public class Task implements Comparable<Task> {
         this.urgency = urgency;
         this.deadline = deadline;
         this.resource = resource;
+        this.status = TaskStatus.PENDING;
+    }
+
+    /**
+     * Returns the status of this task.
+     */
+    public TaskStatus getStatus() { return status; }
+
+    /**
+     * Sets the status of this task.
+     * @param status new status, non-null
+     */
+    public void setStatus(TaskStatus status) {
+        if (status == null) throw new IllegalArgumentException("Status cannot be null");
+        this.status = status;
     }
 
     public String getId() { return id; }
@@ -83,6 +100,6 @@ public class Task implements Comparable<Task> {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s (Urgency: %d, Deadline: %s) - %s", id, name, urgency, deadline, resource);
+        return String.format("[%s] %s (Urgency: %d, Deadline: %s, Status: %s) - %s", id, name, urgency, deadline, status, resource);
     }
 } 

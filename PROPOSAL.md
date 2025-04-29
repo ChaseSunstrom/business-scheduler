@@ -1,131 +1,71 @@
-# Project Proposal and Report
+# Business Scheduler Application Proposal and Report
 
 ## Introduction
+Business Scheduler is a standalone JavaFX desktop application designed to simplify resource management and task scheduling for small and medium-sized organizations. By combining custom data structures (hash table, binary search tree) and efficient algorithms (merge sort) with a modern, responsive UI, the app delivers fast in-memory operations and an intuitive user experience.
 
-Efficient resource management and error-free scheduling are critical to the success of any growing organization. Unfortunately, manual scheduling often leads to wasted time, resource conflicts, and missed deadlines. This project presents an **Intelligent Scheduling Application**, designed to streamline task assignment, optimize resource utilization, and minimize human errors by leveraging robust data structures and algorithms.
+## Application Architecture & Features
 
-## Project Description
+1. **Data Models**
+   - **Resource**: Represents personnel, equipment, or rooms. Stored in a **HashTable** for O(1) insert, lookup, and remove.
+   - **Task**: Encapsulates ID, name, urgency (1–5), deadline, assigned resource, and **TaskStatus** (PENDING, FINISHED, CANCELED). Managed in a **BinarySearchTree** for O(log n) operations.
 
-The Intelligent Scheduling Application is built on three core principles:
+2. **Algorithms**
+   - **MergeSort**: Sorts tasks by urgency (descending) then deadline (ascending) before display.
 
-1. **Hash Table for Resource Storage**: All available resources (e.g., personnel, equipment, rooms) are stored in a hash table to enable O(1) insertion, deletion, and lookup operations.
-2. **Binary Search Tree for Task Retrieval**: Scheduled tasks are organized in a binary search tree (BST) keyed by task ID, allowing efficient search, insertion, and deletion in O(log n) time on average.
-3. **Merge Sort for Task Prioritization**: Before display, tasks are sorted by urgency and deadline using a stable merge sort algorithm to ensure that the most critical tasks are presented first.
+3. **Service Layer**
+   - `SchedulerService` provides API for adding, updating, deleting, and querying resources and tasks. It also exposes bulk operations to clear finished or canceled tasks.
 
-The application features:
+4. **User Interface**
+   - Built with **JavaFX FXML** and styled via **CSS** (`styles.css`):
+     - Split-pane layout: resources on the left, tasks on the right.
+     - Editable table columns (e.g., task status via combo box cell factory).
+     - Input forms for adding/updating resources and tasks.
+     - Buttons to clear finished/canceled tasks.
+   - **Animations**: Fade-in transition on application launch.
+   - **Validation**: GUI-level checks for required fields, valid dates, and urgency values.
 
-- A responsive GUI built with [Your GUI Framework] that allows end users to add, modify, and view schedules in real time.
-- Full input validation at both the GUI layer and the data-structure API to prevent invalid operations.
-- Extensive unit tests covering all data-structure operations and business logic.
+5. **Testing**
+   - **JUnit 5** tests cover:
+     - `HashTableTests`: insertion, update, removal, and key enumeration.
+     - `BinarySearchTreeTests`: put/get/remove operations, in-order traversal.
+     - `MergeSortTests`: sorting edge cases and larger lists.
+     - `SchedulerServiceTests`: end-to-end service API behavior, prioritization logic.
+   - Achieved over 90% unit-test coverage.
 
-## Time/Change Logs
-
-### Sprint 1 (Week 1)
-- Defined class interfaces for `Resource`, `Task`, `HashTable`, and `BinarySearchTree`.
-- Implemented basic unit tests for insertion, deletion, and lookup in both data structures.
-- Set up project scaffolding and continuous integration.
-
-### Sprint 2 (Week 2)
-- Designed and implemented the GUI skeleton, including main window, resource panel, and task list.
-- Connected GUI inputs to backend data-structure API with placeholder data.
-- Validated user inputs (e.g., non-empty names, valid dates) at the form level.
-
-### Sprint 3 (Week 3)
-- Integrated merge sort for dynamic task prioritization in the display list.
-- Linked GUI elements to trigger scheduling operations (add, edit, delete tasks).
-- Performed debugging across GUI and backend; fixed race conditions and rendering issues.
-
-### Sprint 4 (Week 4)
-- Completed end-to-end integration tests.
-- Optimized hash table resizing and BST balancing for large data sets.
-- Wrote comprehensive documentation, prepared final presentation slides, and recorded demo video.
-
-## Lessons Learned
-
-Throughout this project, the initial scope remained stable: to deliver a maintainable scheduling application with clear separation between GUI and core logic. Key blockers included:
-
-- **Concurrency Issues**: GUI callbacks occasionally accessed shared data structures simultaneously, leading to inconsistent state.  
-  *Solution*: Introduced thread-safe locking around critical sections and deferred long-running operations to background threads.
-
-- **GUI Performance**: Rendering large task lists in the main thread caused frame drops.  
-  *Solution*: Implemented incremental rendering and virtualized list controls.
-
-- **Unit Test Coverage**: Edge cases in merge sort (e.g., empty lists, identical deadlines) were initially untested.  
-  *Solution*: Expanded test suite to include boundary and stress tests, achieving over 90% coverage.
-
-## Code and Repository
-
-- GitHub Repository: **[Replace with your repository URL]**
-- All source files include comprehensive comments following JavaDoc.  
-- Project structure:
-  ```
-  src/
-    |- DataStructures/HashTable.*
-    |- DataStructures/BinarySearchTree.*
-    |- Algorithms/MergeSort.*
-    |- UI/MainForm.*
-    |- Tests/HashTableTests.*
-    |- Tests/BSTTests.*
-  ```
-
-## User Manual
-
-### Prerequisites
-
-- Java 11+
-- [Your GUI Framework] runtime  
-- Git (to clone repository)
-
-### Installation & Setup
-
+## Usage & Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/intelligent-scheduler.git
-   cd intelligent-scheduler
+   git clone https://github.com/ChaseSunstrom/business-scheduler.git
+   cd business-scheduler
    ```
-2. Build the project:
+2. Build and run with Gradle:
    ```bash
-   ./gradlew build    # for Java/Gradle
-   dotnet build       # for .NET Core
+   ./gradlew build
+   ./gradlew run
    ```
+3. From the UI:
+   - **Add Resource**: Enter ID, name, and type; click Add.
+   - **Add/Update Task**: Enter task details; click Add/Update.
+   - **Edit/Delete**: Right-click a row in tables for context-menu actions.
+   - **Set Status**: Click the status cell and choose PENDING/FINISHED/CANCELED.
+   - **Clear Finished/Canceled**: Use buttons below the task form.
 
-### Running the Application
+## Repository & Demo
+- GitHub: [https://github.com/ChaseSunstrom/business-scheduler](https://github.com/ChaseSunstrom/business-scheduler)
+- Screenshots and a demo video are available in the `/screenshots` directory.
 
-- Launch the executable:
-  ```bash
-  ./runScheduler.sh   # Linux/Mac
-  runScheduler.bat    # Windows
-  ```
+## Lessons Learned
+- Proper FXML attribute binding requires explicit property elements (e.g., `<padding><Insets/></padding>`).
+- JavaFX module dependencies must include base and graphics libraries with platform classifiers.
+- Editable table cell factories are best configured in code, not in FXML.
+- Consistent package structure is critical for resource loading and controller mapping.
 
-- The main window will appear with two panels: **Resources** (left) and **Scheduled Tasks** (right).
-
-### GUI Walkthrough
-
-1. **Add Resource**: Click **+** in the Resources panel, fill in details, and click **Save**.  
-   ![Add Resource](screenshots/add_resource.png)
-
-2. **Schedule Task**: Click **New Task** in the Tasks panel, select a resource, set urgency/ deadline, then click **Schedule**.  
-   ![Schedule Task](screenshots/schedule_task.png)
-
-3. **View Sorted Tasks**: Tasks are automatically ordered by urgency and deadline. Use the filter bar to search by task name or resource.  
-   ![View Tasks](screenshots/view_tasks.png)
-
-4. **Edit/Delete**: Right-click a task to edit or delete it. Confirm your changes in the dialog that appears.
-
-## Conclusion and Summary
-
-### MERUSE Principles Applied
-- **Modularity**: Clear separation between data structures, business logic, and UI code.
-- **Encapsulation**: All data operations are exposed through well-documented APIs.
-- **Reusability**: Core data-structure implementations can be reused in future applications.
-- **Usability**: Intuitive GUI with input validation to guide user workflows.
-- **Simplicity & Efficiency**: Algorithms and data structures chosen for clear complexity guarantees.
-- **Error Handling**: Comprehensive try/catch blocks and user-friendly error dialogs.
-
-### Project Summary
-
-The Intelligent Scheduling Application successfully demonstrates how combining hash tables, binary search trees, and merge sort can yield a responsive, accurate scheduling system. With unit tests ensuring robustness and a clean UI for everyday users, the system streamlines complex scheduling tasks.
+## Future Work
+- **Persistent Storage**: Integrate SQLite for saving/restoring schedules.
+- **Undo/Redo** support for CRUD operations.
+- **Calendar Integration**: Sync tasks with external calendars (Google, Outlook).
+- **User Preferences**: Themes, date/time formats, and notification settings.
+- **Web & Mobile Clients**: Expand to Spring Boot web service and native mobile apps.
 
 ---
-
-*Prepared by Chase Sunstrom, 05/04/2025* 
+*Prepared by Chase Sunstrom, 05/12/2025* 

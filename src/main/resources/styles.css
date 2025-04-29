@@ -1,0 +1,50 @@
+/* Global root styling */
+.root {
+    -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f0f2f5;
+}
+
+/* TableView styling */
+.table-view {
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 5;
+    -fx-background-color: white;
+}
+.table-view .column-header-background {
+    -fx-background-color: #009688;
+}
+.table-view .column-header, .table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.table-view .table-row-cell:filled:selected, .table-view .table-row-cell:focused:selected {
+    -fx-background-color: #b2dfdb;
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: #009688;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+}
+.button:hover {
+    -fx-background-color: #00796b;
+}
+
+/* TextField, ComboBox, DatePicker styling */
+.text-field, .combo-box, .date-picker {
+    -fx-border-color: #009688;
+    -fx-border-radius: 3;
+}
+.text-field:focused, .combo-box:focused, .date-picker:focused {
+    -fx-border-width: 2;
+}
+
+/* Container styling */
+.vbox {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+} 

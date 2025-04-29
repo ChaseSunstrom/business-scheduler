@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 
 /**
  * Main application class to launch the JavaFX scheduler UI.
@@ -22,8 +24,16 @@ public class MainApp extends Application {
             root = loader.load(fxmlStream);
         }
         primaryStage.setTitle("Intelligent Scheduler");
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        primaryStage.setScene(scene);
         primaryStage.show();
+
+        // fade-in animation on launch
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), root);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+        fadeIn.play();
     }
 
     public static void main(String[] args) {

@@ -10,7 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.util.converter.LocalDateStringConverter;
+import java.util.stream.Collectors;
+import com.scheduler.Models.TaskStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,11 +39,15 @@ public class MainController {
     @FXML private TableColumn<Task, Number> taskUrgencyCol;
     @FXML private TableColumn<Task, LocalDateTime> taskDeadlineCol;
     @FXML private TableColumn<Task, Resource> taskResourceCol;
+    @FXML private TableColumn<Task, TaskStatus> taskStatusCol;
     @FXML private TextField taskIdField;
     @FXML private TextField taskNameField;
     @FXML private TextField taskUrgencyField;
     @FXML private DatePicker taskDeadlinePicker;
     @FXML private ComboBox<Resource> taskResourceCombo;
+
+    @FXML private Button clearFinishedBtn;
+    @FXML private Button clearCanceledBtn;
 
     private final ObservableList<Resource> resourceList = FXCollections.observableArrayList();
     private final ObservableList<Task> taskList = FXCollections.observableArrayList();
@@ -74,7 +81,16 @@ public class MainController {
         taskUrgencyCol.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getUrgency()));
         taskDeadlineCol.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getDeadline()));
         taskResourceCol.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getResource()));
+        taskStatusCol.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getStatus()));
+        taskStatusCol.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(TaskStatus.values())));
+        taskStatusCol.setOnEditCommit(e -> {
+            Task t = e.getRowValue();
+            t.setStatus(e.getNewValue());
+            service.updateTask(t.getId(), t.getName(), t.getUrgency(), t.getDeadline(), t.getResource());
+            refreshTasks();
+        });
         taskTable.setItems(taskList);
+        taskTable.setEditable(true);
 
         // Context menu for tasks
         taskTable.setRowFactory(table -> {
@@ -141,12 +157,17 @@ public class MainController {
             LocalDateTime deadline = LocalDateTime.of(date, LocalTime.MIDNIGHT);
             Resource res = taskResourceCombo.getValue();
             if (res == null) throw new IllegalArgumentException("Resource must be selected");
-            Task task = new Task(id, name, urgency, deadline, res);
-            service.addTask(task);
+            boolean exists = service.hasTask(id);
+            if (exists) {
+                service.updateTask(id, name, urgency, deadline, res);
+            } else {
+                Task task = new Task(id, name, urgency, deadline, res);
+                service.addTask(task);
+            }
             refreshTasks();
             clearTaskFields();
         } catch (Exception ex) {
-            showAlert("Error Adding Task", ex.getMessage());
+            showAlert("Error Adding/Updating Task", ex.getMessage());
         }
     }
 
@@ -177,6 +198,24 @@ public class MainController {
         } catch (Exception ex) {
             showAlert("Error Deleting Task", ex.getMessage());
         }
+    }
+
+    @FXML
+    private void handleClearFinished() {
+        var toRemove = taskList.stream()
+                .filter(t -> t.getStatus() == TaskStatus.FINISHED)
+                .collect(Collectors.toList());
+        toRemove.forEach(t -> service.removeTask(t.getId()));
+        refreshTasks();
+    }
+
+    @FXML
+    private void handleClearCanceled() {
+        var toRemove = taskList.stream()
+                .filter(t -> t.getStatus() == TaskStatus.CANCELED)
+                .collect(Collectors.toList());
+        toRemove.forEach(t -> service.removeTask(t.getId()));
+        refreshTasks();
     }
 
     private void showAlert(String title, String msg) {
