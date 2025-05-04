@@ -1,3 +1,12 @@
+/*
+    @author Chase Sunstrom casunstro@dmacc.edu
+    @date 2025-05-04
+    @version 1.0
+
+    This is the main application class for the Business Scheduler.
+    It launches the JavaFX scheduler UI.
+*/
+
 package main.java.com.scheduler;
 
 import javafx.application.Application;

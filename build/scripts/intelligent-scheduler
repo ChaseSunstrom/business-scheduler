@@ -86,8 +86,7 @@ done
 # shellcheck disable=SC2034
 APP_BASE_NAME=${0##*/}
 # Discard cd standard output in case $CDPATH is set (https://github.com/gradle/gradle/issues/25036)
-APP_HOME=$( cd -P "${APP_HOME:-./}.." > /dev/null && printf '%s
-' "$PWD" ) || exit
+APP_HOME=$( cd -P "${APP_HOME:-./}.." > /dev/null && printf '%s\n' "$PWD" ) || exit
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD=maximum
@@ -206,7 +205,7 @@ fi
 DEFAULT_JVM_OPTS='"--module-path" "C:\\Users\\casun\\.gradle\\caches\\modules-2\\files-2.1\\org.openjfx\\javafx-fxml\\17.0.2\\5079f88d5345e988222c90a345ad682b7aaccad3\\javafx-fxml-17.0.2-win.jar;C:\\Users\\casun\\.gradle\\caches\\modules-2\\files-2.1\\org.openjfx\\javafx-controls\\17.0.2\\707f290bacde2738c0a7e1d0b4a8193002c29cf7\\javafx-controls-17.0.2-win.jar;C:\\Users\\casun\\.gradle\\caches\\modules-2\\files-2.1\\org.openjfx\\javafx-controls\\17.0.2\\f52640ea07a0d7fe2ac8b9f945ec58fa22ac1afd\\javafx-controls-17.0.2.jar;C:\\Users\\casun\\.gradle\\caches\\modules-2\\files-2.1\\org.openjfx\\javafx-graphics\\17.0.2\\6f95886c8fed3e1b21370a199c3937846ef6b3cc\\javafx-graphics-17.0.2-win.jar;C:\\Users\\casun\\.gradle\\caches\\modules-2\\files-2.1\\org.openjfx\\javafx-graphics\\17.0.2\\1eb7ce07e07ccc2fcb26103f07535e72069519d6\\javafx-graphics-17.0.2.jar;C:\\Users\\casun\\.gradle\\caches\\modules-2\\files-2.1\\org.openjfx\\javafx-base\\17.0.2\\1bd6dc88b180a6239a5067320c2f0d7f3526e1d2\\javafx-base-17.0.2-win.jar;C:\\Users\\casun\\.gradle\\caches\\modules-2\\files-2.1\\org.openjfx\\javafx-base\\17.0.2\\ca46f15a306175ac1513211e1d190a5baacd77cc\\javafx-base-17.0.2.jar" "--add-modules" "javafx.base,javafx.graphics,javafx.controls,javafx.fxml"'
 
 # Collect all arguments for the java command:
-#   * DEFAULT_JVM_OPTS, JAVA_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
+#   * DEFAULT_JVM_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
 #     and any embedded shellness will be escaped.
 #   * For example: A user cannot expect ${Hostname} to be expanded, as it is an environment variable and will be
 #     treated as '${Hostname}' itself on the command line.

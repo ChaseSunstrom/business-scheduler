@@ -1,66 +1,77 @@
-# Business Scheduler
+# User Manual
 
-JavaFX desktop application for intuitive resource management and task scheduling.
+This manual provides instructions on using the Business Scheduler JavaFX desktop application.
 
-## Features
+## Requirements
 
-- Manage **Resources** (personnel, equipment, rooms) via a fast in-memory HashTable.
-- Create, update, and delete **Tasks** with fields:
-  - ID, Name, Urgency (1–5), Deadline, Assigned Resource
-  - **Status**: PENDING, FINISHED, CANCELED
-- Tasks stored in a Binary Search Tree for efficient lookup and deletion.
-- **MergeSort** algorithm to prioritize tasks by urgency and deadline.
-- **Interactive UI**:
-  - Split-pane layout: Resources (left) and Tasks (right)
-  - Editable Status column via combo box
-  - Buttons to clear finished or canceled tasks
-  - Fade-in animation on launch
-- **Styling** with CSS (`styles.css`)
-- **Validation** of inputs at the GUI level
+- Java 11 or higher installed
+- Gradle (or use the Gradle wrapper)
 
-## Architecture
-
-- **Models**: `Resource`, `Task`, `TaskStatus`
-- **Data Structures**: `HashTable<K,V>`, `BinarySearchTree<K,V>`
-- **Algorithms**: `MergeSort` for ordering tasks
-- **Service Layer**: `SchedulerService` API for CRUD operations and bulk clears
-- **UI**: JavaFX FXML + Controller + CSS + animations
-- **Testing**: JUnit 5 unit tests covering all major components
-
-## Installation & Setup
+## Installation & Launch
 
 ```bash
 # Clone the repository
 git clone https://github.com/ChaseSunstrom/business-scheduler.git
 cd business-scheduler
 
-# Build and run (uses Gradle wrapper)
+# Build and run with Gradle
 gradle build
 gradle run
 ```
 
-## Usage
+Alternatively, run the fat JAR after building:
 
-1. **Add Resource**: Enter ID, Name, Type. Click **Add Resource**.
-2. **Add/Update Task**: Enter Task ID, Name, Urgency, select Deadline & Resource. Click **Add/Update Task**.
-3. **Set Status**: Click the Status cell and choose PENDING, FINISHED, or CANCELED.
-4. **Clear Tasks**: Use **Clear Finished** or **Clear Canceled** buttons.
-5. **Edit/Delete Items**: Right-click any row in the tables for context menus.
-
-## Testing
-
-Run all unit tests with:
 ```bash
-gradle test
+java -jar build/libs/business-scheduler-1.0-SNAPSHOT.jar
 ```
 
-## Future Enhancements
+## Application Overview
 
-- Persistent storage (SQLite)
-- Undo/Redo support
-- External calendar integration (Google, Outlook)
-- User preferences & theming
-- Web & mobile clients
+- **Resources Pane** (left): Manage Resources (ID, Name, Type).
+- **Tasks Pane** (right): List and organize Tasks by ID, Urgency, Deadline, Assigned Resource, and Status.
 
----
-*Developed by Chase Sunstrom* 
+## Adding a Resource
+
+1. Click **Add Resource**.
+2. Enter Resource **ID**, **Name**, and **Type**.
+3. Click **Save** to add it to the table.
+
+## Managing Tasks
+
+- **Add Task**:
+  1. Click **Add Task**.
+  2. Fill in **Task ID**, **Name**, **Urgency** (1–5), **Deadline**, and select an **Assigned Resource**.
+  3. Click **Save**.
+
+- **Edit Task**:
+  1. Right-click a task row and choose **Edit**.
+  2. Update fields in the form and click **Save**.
+
+- **Delete Task**:
+  1. Right-click a task row and choose **Delete**.
+  2. Confirm deletion in the prompt.
+
+- **Set Status**:
+  1. Click the **Status** cell in the Tasks table.
+  2. Select **PENDING**, **FINISHED**, or **CANCELED** from the dropdown.
+
+- **Clear Finished/Canceled**:
+  - Use the **Clear Finished** or **Clear Canceled** buttons below the task form to bulk-remove tasks.
+
+## Sorting & Prioritization
+
+Tasks are automatically sorted using **MergeSort** by:
+1. Urgency (descending)
+2. Deadline (ascending)
+
+## Persistence
+
+All data is stored in memory during runtime. Data will reset when the application closes.
+
+## Troubleshooting
+
+- Verify JavaFX modules are properly set on the module path.
+- Ensure `styles.css` and FXML files are present under `src/main/resources`.
+- Consult the console output for stack traces and error details.
+
+For more details, refer to the developer guide and JUnit test reports. 
